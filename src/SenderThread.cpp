@@ -35,7 +35,10 @@ void SenderThread::threadedFunction()
 		std::queue<ofxOscMessage> copied_queue;
 		lock();
 		copied_queue.swap(queue_);
-		long frame_number = frame_number_++;
+
+		frame_number_ = (ofGetElapsedTimeMillis() - start_time) / interval_ms;
+
+		long frame_number = frame_number_;
 		unlock();
 		
 		while (copied_queue.empty() == false)
