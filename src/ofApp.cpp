@@ -2,10 +2,10 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	sender.setup("localhost",
+	sender.setup("192.168.0.255",
 		6666, // port
-		1, // 100, // interval (1/30 second)
-		1); // 3000); // interval timescale
+		100, // interval (1/30 second)
+		3000); // interval timescale
 	sender.startThread();
 
 	ofBackground(76, 153, 0);
