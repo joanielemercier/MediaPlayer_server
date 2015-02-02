@@ -1,0 +1,4 @@
+*.opensdf
+*.sdf
+obj/
+/bin/*
