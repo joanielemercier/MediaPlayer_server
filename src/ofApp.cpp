@@ -10,6 +10,8 @@ void ofApp::setup(){
 
 	ofBackground(76, 153, 0);
 	font.loadFont(OF_TTF_MONO, 72);
+
+	show_stats = true;
 }
 
 //--------------------------------------------------------------
@@ -23,11 +25,21 @@ void ofApp::draw(){
 	std::string message = ofToString(sender.getFrameNumber());
 
 	font.drawString(message, (ofGetWindowWidth() / 2) - (font.stringWidth(message) / 2), (ofGetWindowHeight() / 2) - (font.stringHeight(message) / 2));
+
+	ofDrawBitmapString("Type s to toggle statistics display on clients", 10, 30);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+	if (key == 's')
+	{
+		show_stats = !show_stats;
 
+		ofxOscMessage message;
+		message.setAddress("/display_stats");
+		message.addIntArg(show_stats);
+		sender.send(message);
+	}
 }
 
 //--------------------------------------------------------------

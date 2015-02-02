@@ -22,4 +22,6 @@ class ofApp : public ofBaseApp{
 		
 		SenderThread sender;
 		ofTrueTypeFont font;
+
+		bool show_stats;
 };

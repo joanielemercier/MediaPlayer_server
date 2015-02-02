@@ -32,7 +32,17 @@ void SenderThread::threadedFunction()
 	{
 		// send frame number
 
-		long frame_number = incrementFrameNumber();
+		std::queue<ofxOscMessage> copied_queue;
+		lock();
+		copied_queue.swap(queue_);
+		long frame_number = frame_number_++;
+		unlock();
+		
+		while (copied_queue.empty() == false)
+		{
+			sender.sendMessage(copied_queue.front());
+			copied_queue.pop();
+		}
 
 		ofxOscMessage message;
 		message.setAddress("/frame_number");
@@ -64,12 +74,9 @@ void SenderThread::setFrameNumber(long frame_number)
 	unlock();
 }
 
-long SenderThread::incrementFrameNumber()
+void SenderThread::send(ofxOscMessage& message)
 {
-	long result;
 	lock();
-	frame_number_++;
-	result = frame_number_;
+	queue_.push(message);
 	unlock();
-	return result;
 }

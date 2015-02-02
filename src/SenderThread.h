@@ -1,5 +1,6 @@
 #pragma once
 #include "ofThread.h"
+#include <ofxOsc.h>
 
 /*
 Sends periodic frame number OSC messages, plus others (to come)
@@ -14,14 +15,15 @@ public:
 	void setup(std::string address, int port, int interval, int interval_timescale);
 	long getFrameNumber();
 	void setFrameNumber(long frame_number);
+	void send(ofxOscMessage& message);
 protected:
 	virtual void threadedFunction();
 private:
-	long incrementFrameNumber();
 	std::string address_;
 	int port_;
 	int interval_;
 	int interval_timescale_;
 	long frame_number_;
+	std::queue<ofxOscMessage> queue_;
 };
 
