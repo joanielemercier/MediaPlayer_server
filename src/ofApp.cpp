@@ -8,6 +8,12 @@ void ofApp::setup(){
 		3000); // interval timescale
 	sender.startThread();
 
+	// tell any existing clients to reset frame numbers
+	ofxOscMessage message;
+	message.setAddress("/frame_number_reset");
+	message.addInt64Arg(0);
+	sender.send(message);
+
 	ofBackground(76, 153, 0);
 	font.loadFont(OF_TTF_MONO, 72);
 
