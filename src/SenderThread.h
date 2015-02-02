@@ -14,7 +14,7 @@ public:
 	~SenderThread(void);
 	void setup(std::string address, int port, int interval, int interval_timescale);
 	long getFrameNumber();
-	void setFrameNumber(long frame_number);
+	void resetFrameNumber();
 	void send(ofxOscMessage& message);
 protected:
 	virtual void threadedFunction();
@@ -24,6 +24,7 @@ private:
 	int interval_;
 	int interval_timescale_;
 	long frame_number_;
+    bool frame_number_should_reset_;
 	std::queue<ofxOscMessage> queue_;
 };
 

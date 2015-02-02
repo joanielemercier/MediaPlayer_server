@@ -9,10 +9,8 @@ void ofApp::setup(){
 	sender.startThread();
 
 	// tell any existing clients to reset frame numbers
-	ofxOscMessage message;
-	message.setAddress("/frame_number_reset");
-	message.addInt64Arg(0);
-	sender.send(message);
+    // by faking a 0 key-press
+	keyPressed('0');
 
 	ofBackground(76, 153, 0);
 	font.loadFont(OF_TTF_MONO, 72);
@@ -33,6 +31,7 @@ void ofApp::draw(){
 	font.drawString(message, (ofGetWindowWidth() / 2) - (font.stringWidth(message) / 2), (ofGetWindowHeight() / 2) - (font.stringHeight(message) / 2));
 
 	ofDrawBitmapString("Type s to toggle statistics display on clients", 10, 30);
+	ofDrawBitmapString("Type 0 to reset clients", 10, 50);
 }
 
 //--------------------------------------------------------------
@@ -45,6 +44,10 @@ void ofApp::keyPressed(int key){
 		message.setAddress("/display_stats");
 		message.addIntArg(show_stats);
 		sender.send(message);
+	}
+	else if (key == '0')
+	{
+        sender.resetFrameNumber();
 	}
 }
 

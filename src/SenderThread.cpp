@@ -2,7 +2,7 @@
 #include <ofxOsc.h>
 
 SenderThread::SenderThread(void) :
-	frame_number_(0)
+    frame_number_(0), frame_number_should_reset_(true)
 {
 }
 
@@ -35,6 +35,16 @@ void SenderThread::threadedFunction()
 		std::queue<ofxOscMessage> copied_queue;
 		lock();
 		copied_queue.swap(queue_);
+
+        if (frame_number_should_reset_)
+        {
+            start_time = ofGetElapsedTimeMillis();
+            ofxOscMessage message;
+		    message.setAddress("/frame_number_reset");
+		    message.addInt64Arg(0);
+            copied_queue.push(message);
+            frame_number_should_reset_ = false;
+        }
 
 		frame_number_ = (ofGetElapsedTimeMillis() - start_time) / interval_ms;
 
@@ -70,10 +80,10 @@ long SenderThread::getFrameNumber()
 	return frame_number_;
 }
 
-void SenderThread::setFrameNumber(long frame_number)
+void SenderThread::resetFrameNumber()
 {
 	lock();
-	frame_number_ = frame_number;
+	frame_number_should_reset_ = true;
 	unlock();
 }
 
