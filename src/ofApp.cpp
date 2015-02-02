@@ -2,7 +2,14 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	sender.setup("localhost",
+		6666, // port
+		1, // 100, // interval (1/30 second)
+		1); // 3000); // interval timescale
+	sender.startThread();
 
+	ofBackground(76, 153, 0);
+	font.loadFont(OF_TTF_MONO, 72);
 }
 
 //--------------------------------------------------------------
@@ -13,6 +20,9 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+	std::string message = ofToString(sender.getFrameNumber());
+
+	font.drawString(message, (ofGetWindowWidth() / 2) - (font.stringWidth(message) / 2), (ofGetWindowHeight() / 2) - (font.stringHeight(message) / 2));
 }
 
 //--------------------------------------------------------------

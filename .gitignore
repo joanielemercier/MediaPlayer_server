@@ -2,3 +2,4 @@
 *.sdf
 obj/
 /bin/*
+*.suo
