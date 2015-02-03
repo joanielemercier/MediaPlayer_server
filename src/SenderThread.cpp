@@ -34,7 +34,8 @@ void SenderThread::threadedFunction()
 
 		std::queue<ofxOscMessage> copied_queue;
 		lock();
-		copied_queue.swap(queue_);
+		copied_queue = queue_;
+        queue_ = std::queue<ofxOscMessage>();
 
         if (frame_number_should_reset_)
         {
