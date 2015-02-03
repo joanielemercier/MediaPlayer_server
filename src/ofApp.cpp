@@ -34,6 +34,11 @@ void ofApp::draw(){
 	ofDrawBitmapString("Type 0 to reset clients", 10, 50);
 }
 
+void ofApp::exit()
+{
+    sender.waitForThread(true);
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	if (key == 's')
