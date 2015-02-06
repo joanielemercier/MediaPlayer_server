@@ -2,6 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetFrameRate(30);
 	sender.setup("192.168.0.255",
 		6666, // port
 		100, // interval (1/30 second)
